@@ -1,6 +1,8 @@
-package dsm.auth.module;
+package dsm.auth.module.testuser;
 
-public class TestUser implements DsmUserConvertable{
+import dsm.auth.module.DsmUserConvertable;
+
+public class TestUser implements DsmUserConvertable {
     private String userName;
     private String email;
     private String number;
