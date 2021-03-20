@@ -10,25 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class AuthRequester {
-    public DsmUserInfo getUserinfo(String accessToken) throws Exception {
-        URL url;
-        HttpURLConnection connection;
 
-        try {
-            url = new URL("https://developer-api.dsmkr.com/v1/info/basic/");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
-            connection.setDoInput(true);
-        } catch (Exception e) {
-            throw new Exception("Could not connect to dsm auth!!");
-        }
+    public DsmUserInfo getUserinfo(String token) throws Exception {
+        HttpURLConnection connection = request(token);
 
-        int statusCode = connection.getResponseCode();
+        System.out.println(connection.getResponseCode());
 
-        if (statusCode > 200) {
+        if (connection.getResponseCode() > 200) {
             throw new Exception("DSM Auth: Unauthorized.");
         }
 
@@ -48,5 +36,31 @@ public class AuthRequester {
         String json = response.toString();
 
         return new GsonBuilder().create().fromJson(json, DsmUserInfo.class);
+    }
+
+    public boolean userIsExist(String token) throws Exception {
+        HttpURLConnection connection = request(token);
+
+        return connection.getResponseCode() > 200;
+    }
+
+    private HttpURLConnection request(String token) throws Exception {
+        URL url;
+        HttpURLConnection connection;
+
+        try {
+            String DSM_AUTH_URL = "https://developer-api.dsmkr.com/v1/info/basic/";
+            url = new URL(DSM_AUTH_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("access-token", "Bearer " + token);
+            connection.setDoInput(true);
+        } catch (Exception e) {
+            throw new Exception("Could not connect to dsm auth!!");
+        }
+
+        return connection;
     }
 }
