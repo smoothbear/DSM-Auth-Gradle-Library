@@ -6,6 +6,15 @@
  * User Manual available at https://docs.gradle.org/6.8.3/userguide/building_java_projects.html
  */
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
+}
+
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
@@ -16,7 +25,10 @@ repositories {
     jcenter()
 }
 
+apply plugin: 'com.jfrog.bintray'
+
 version = '0.1.0'
+group = 'com.semicolon.dsmauth'
 
 dependencies {
     // Use JUnit Jupiter API for testing.
@@ -38,4 +50,25 @@ dependencies {
 tasks.named('test') {
     // Use junit platform for unit tests.
     useJUnitPlatform()
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    pkg {
+        repo = 'dsmAuth'
+        name = 'dsmAuth'
+        userOrg = 'smoothbear'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/smoothbear/DSM-Auth-Gradle-Library.git'
+
+        publish = true
+
+        version {
+            name = '1.0.0'
+            desc = 'Dsm-auth library alpha version'
+            released  = new Date()
+            vcsTag = '1.0.0'
+        }
+    }
 }
