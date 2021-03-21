@@ -13,6 +13,7 @@ import java.net.URL;
  * This class handles requests.
  */
 public class DsmAuthRequester {
+    private final String DSM_AUTH_URL = "https://developer-api.dsmkr.com/v1/info/basic/";
     /**
      * @param token - Dsm Auth Access-Token.
      * @return DsmUserInfo
@@ -61,7 +62,6 @@ public class DsmAuthRequester {
         HttpURLConnection connection;
 
         try {
-            String DSM_AUTH_URL = "https://developer-api.dsmkr.com/v1/info/basic/";
             url = new URL(DSM_AUTH_URL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
