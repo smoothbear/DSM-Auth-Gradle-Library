@@ -10,11 +10,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * This class is 
+ * This class handles requests.
  */
 public class DsmAuthRequester {
     /**
-     *
      * @param token - Dsm Auth Access-Token.
      * @return DsmUserInfo
      * @throws Exception - Throws Unauthorized Exception.
@@ -46,6 +45,11 @@ public class DsmAuthRequester {
         return new GsonBuilder().create().fromJson(json, DsmUserInfo.class);
     }
 
+    /**
+     * @param token - Dsm Auth Access-Token.
+     * @return boolean type.
+     * @throws Exception - Throws Unauthorized Exception.
+     */
     public boolean userIsExist(String token) throws Exception {
         HttpURLConnection connection = request(token);
 
