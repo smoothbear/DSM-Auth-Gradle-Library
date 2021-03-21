@@ -9,8 +9,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class AuthRequester {
-
+/**
+ * This class is 
+ */
+public class DsmAuthRequester {
+    /**
+     *
+     * @param token - Dsm Auth Access-Token.
+     * @return DsmUserInfo
+     * @throws Exception - Throws Unauthorized Exception.
+     */
     public DsmUserInfo getUserinfo(String token) throws Exception {
         HttpURLConnection connection = request(token);
 
